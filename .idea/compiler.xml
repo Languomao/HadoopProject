@@ -11,6 +11,7 @@
         <module name="hbase-subject" />
         <module name="hive-subject" />
         <module name="kafka-subject" />
+        <module name="spark-subject" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
