@@ -6,9 +6,16 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="FlinkProject" />
-        <module name="HadoopTest" />
+        <module name="flume-subject" />
+        <module name="hadoop-subject" />
+        <module name="hbase-subject" />
+        <module name="hive-subject" />
+        <module name="kafka-subject" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="FlinkProject" target="1.8" />
+      <module name="HadoopTest" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

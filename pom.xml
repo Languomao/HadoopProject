@@ -11,6 +11,11 @@
     <modules>
         <module>FlinkProject</module>
         <module>HadoopTest</module>
+        <module>hive-subject</module>
+        <module>hbase-subject</module>
+        <module>kafka-subject</module>
+        <module>flume-subject</module>
+        <module>hadoop-subject</module>
     </modules>
 
 
