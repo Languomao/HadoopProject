@@ -11,5 +11,17 @@
 
     <artifactId>hive-subject</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.hive</groupId>
+            <artifactId>hive-jdbc</artifactId>
+            <version>1.2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.hadoop</groupId>
+            <artifactId>hadoop-common</artifactId>
+            <version>2.8.1</version>
+        </dependency>
+    </dependencies>
 
 </project>
