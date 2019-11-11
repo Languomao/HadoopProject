@@ -9,8 +9,6 @@
     <packaging>pom</packaging>
     <version>1.0</version>
     <modules>
-        <module>FlinkProject</module>
-        <module>HadoopTest</module>
         <module>hive-subject</module>
         <module>hbase-subject</module>
         <module>kafka-subject</module>
