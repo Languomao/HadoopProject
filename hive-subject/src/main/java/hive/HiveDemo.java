@@ -3,7 +3,8 @@ package hive;
 import java.sql.*;
 /*
 *
-* 连接数据库
+* 连接hive数据库,做DDL等操作
+* 主要接口为execute和executeQuery
 *
 * */
 public class HiveDemo {
@@ -33,14 +34,17 @@ public class HiveDemo {
             sta.execute("use test");
             //sta.execute("drop table if exists " + tableName);
             //sta.execute("create table " + tableName + " (id int,name string)");
-            String sql = "show tables";
+            String sql = "select * from test1 limit 10";
             ResultSet res1 = sta.executeQuery(sql);
+            while(res1.next()){
+                System.out.println(res1.getString(1)+"\t"+ res1.getString(2)+"\t"+ res1.getString(3));
+            }
             System.out.println("success!");
 
             //定义执行结果集和sql语句
-            ResultSet res2 = sta.executeQuery("desc " + tableName );
-            while(res1.next()){
-                System.out.println(res1.getString(1));
-            }
+            /*ResultSet res2 = sta.executeQuery("desc " + tableName );
+            while(res2.next()){
+                System.out.println(res2.getString(1));
+            }*/
         }
 }
