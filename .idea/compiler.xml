@@ -16,16 +16,9 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="flink-subject" target="1.8" />
       <module name="FlinkProject" target="1.8" />
-      <module name="flume-subject" target="1.5" />
-      <module name="hadoop-project" target="1.5" />
-      <module name="hadoop-subject" target="1.8" />
+      <module name="HadoopProject" target="1.8" />
       <module name="HadoopTest" target="1.8" />
-      <module name="hbase-subject" target="1.5" />
-      <module name="hive-subject" target="1.5" />
-      <module name="kafka-subject" target="1.5" />
-      <module name="spark-subject" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>

@@ -9,8 +9,6 @@ import java.util.List;
 import java.util.Properties;
 
 /**
- * 消费消息
- *
  * @Classname ProducerTest
  * @Description TODO
  * @Date 2019/11/19 11:29
