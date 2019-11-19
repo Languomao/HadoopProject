@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Properties;
 
 /**
+ * 将制定目录下的文件生产为消息
+ *
  * @Classname ProducerTest
  * @Description TODO
  * @Date 2019/11/19 11:29
