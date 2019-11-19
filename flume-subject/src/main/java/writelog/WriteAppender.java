@@ -1,9 +1,12 @@
+package writelog;
+
 import org.apache.log4j.AppenderSkeleton;
 import org.apache.log4j.spi.LoggingEvent;
 
 /**
  * Created by Languomao on 2018/7/13.
  */
+
 public class WriteAppender extends AppenderSkeleton {
     private String account ;
 
