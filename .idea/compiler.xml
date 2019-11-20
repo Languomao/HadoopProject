@@ -17,7 +17,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="FlinkProject" target="1.8" />
-      <module name="HadoopProject" target="1.8" />
+      <module name="hadoop-project" target="1.8" />
       <module name="HadoopTest" target="1.8" />
     </bytecodeTargetLevel>
   </component>
