@@ -16,6 +16,7 @@
         <module>hadoop-subject</module>
         <module>spark-subject</module>
         <module>flink-subject</module>
+        <module>spark-scala</module>
     </modules>
 
 
