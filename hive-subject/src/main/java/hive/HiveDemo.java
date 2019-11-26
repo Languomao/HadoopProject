@@ -1,7 +1,7 @@
 package hive;
 
 import java.sql.*;
-/*
+/**
 *
 * 连接hive数据库,做DDL等操作
 * 主要接口为execute和executeQuery

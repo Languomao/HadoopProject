@@ -22,7 +22,7 @@ public class FtpUtil {
     public static void main(String[] args) throws Exception {
 
         Configuration conf = new Configuration();
-        conf.set("fs.default.name","hdfs://10.1.1.6:8020");
+        conf.set("fs.default.name","hdfs://10.1.1.7:8020");
         conf.addResource("core-site.xml");
         conf.addResource("hdfs-site.xml");
 
@@ -30,7 +30,7 @@ public class FtpUtil {
         Long time1=Calendar.getInstance().getTimeInMillis();
         //loadFromFtpToHdfs("10.1.1.121", "anonymous", "123", "/hadoop/", "/languomao/", conf);
         //loadFromHdfsToFtp("10.1.1.121", "anonymous", "123", "/hive-output/1e-test/", "/hadoop", conf);
-        ftpDownFiles("10.1.1.121", "anonymous", "123", "/hadoop/hive-output/1w-test/", "D:\\ftpshare\\TestFile\\");
+        ftpDownFiles("10.1.1.115", "anonymous", "123", "G:\\data\\data2", "D:\\result");
         Long time2=Calendar.getInstance().getTimeInMillis();
         System.out.println("coast time:"+(time2-time1)+"ms");
 
@@ -470,6 +470,7 @@ public class FtpUtil {
         try {
             ftp.connect(ip);
             ftp.login(username, password);
+            System.out.println("连接成功...........");
             ftp.setFileType(FTP.BINARY_FILE_TYPE);
             ftp.setControlEncoding("UTF-8");
             int reply = ftp.getReplyCode();
