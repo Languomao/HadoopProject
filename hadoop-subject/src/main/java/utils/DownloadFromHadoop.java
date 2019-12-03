@@ -16,7 +16,7 @@ import java.net.URI;
 public class DownloadFromHadoop {
 
     public static void getOutput(String outputfile) throws IOException {
-        String remoteFile = "hdfs://192.168.136.128:9000/user/hadoop/input/bigdata.txt";
+        String remoteFile = "hdfs://10.1.1.7:8020/opt/python_dep/TensorFlowOnSpark-master/examples/mnist/csv/test/images/";
         File file=new File(remoteFile);
         if(file.exists())
         {
@@ -24,7 +24,7 @@ public class DownloadFromHadoop {
         }
         Path path = new Path(remoteFile);
         Configuration conf = new Configuration();
-        String hdfsPath = "hdfs://192.168.136.128:9000/";
+        String hdfsPath = "hdfs://10.1.1.7:8020/";
         FileSystem fs = FileSystem.get(URI.create(hdfsPath),conf);
         fs.copyToLocalFile(path, new Path(outputfile));
         System.out.println("已经将文件保留到本地文件");
@@ -33,6 +33,6 @@ public class DownloadFromHadoop {
 
     public static void main(String[] args) throws IOException {
         DownloadFromHadoop dfh = new DownloadFromHadoop();
-        dfh.getOutput("E:/Hadoop/Data");
+        dfh.getOutput("G:\\data\\test");
     }
 }

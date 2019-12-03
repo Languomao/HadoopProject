@@ -1,4 +1,4 @@
-package ftp;
+package ftputils;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -17,17 +17,19 @@ import org.apache.hadoop.io.IOUtils;
  * Description TODO
  * Date 2019/11/26 10:50
  * Created by LanKorment
+ * HDFS与FTP数据互传
  */
 
 public class FtpUtil{
     /**
      * loadFromFtpToHdfs:将数据从ftp上传到hdfs上. <br/>
+     * loadFromHdfsToFtp:将数据从hdfs下载到ftp服务器. <br/>
      *
-     * @param ip
-     * @param username
-     * @param password
-     * @param filePath
-     * @param outputPath
+     * @param ip    ftp服务器IP地址
+     * @param username  ftp用户名
+     * @param password  ftp登录密码
+     * @param filePath  ftp目录
+     * @param outputPath    hdfs目录
      * @param conf
      * @return
      * @author

@@ -1,4 +1,4 @@
-package dataproduce.studentdata;
+package dataproduce;
 
 /**
  * Created by Languomao on 2019/5/30.

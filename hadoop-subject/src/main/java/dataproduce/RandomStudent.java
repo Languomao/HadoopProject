@@ -1,4 +1,4 @@
-package dataproduce.studentdata;
+package dataproduce;
 
 import static java.lang.Math.random;
 

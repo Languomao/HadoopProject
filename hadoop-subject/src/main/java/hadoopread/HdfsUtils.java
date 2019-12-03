@@ -14,7 +14,7 @@ public class HdfsUtils {
         FileSystem hdfs = null;
         Configuration conf = new Configuration();
         try {
-            URI uri = new URI("hdfs://localhost:9000");
+            URI uri = new URI("hdfs://10.1.1.7:8020");
             hdfs = FileSystem.get(uri , conf);
         } catch (Exception e) {
             e.printStackTrace();
