@@ -23,7 +23,7 @@ import org.apache.hadoop.hbase.client.Table;
 public class HBaseUtils{
 
     private static final String ZK_CONNECT_KEY = "hbase.zookeeper.quorum";
-    private static final String ZK_CONNECT_VALUE = "hadoop3:2181,hadoop6:2181,hadoop7:2181";
+    private static final String ZK_CONNECT_VALUE = "localhost:2181";
 
     private static Connection conn = null;
     private static Admin admin = null;
@@ -35,8 +35,8 @@ public class HBaseUtils{
 
         HBaseUtils hbu = new HBaseUtils();
 
-
-        hbu.getAllTables();
+        hbu.existTable("User");
+        //hbu.getAllTables();
 
         //hbu.descTable("people");
 
@@ -97,7 +97,7 @@ public class HBaseUtils{
             for(HColumnDescriptor columnFamilie : columnFamilies) {
                 //获取列簇的名字
                 String columnFamilyName = columnFamilie.getNameAsString();
-                System.out.print("\t"+"columnFamilyName:"+columnFamilyName);
+                System.out.println("\t"+"columnFamilyName:"+columnFamilyName);
             }
             System.out.println("执行成功！！！");
         }
