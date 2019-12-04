@@ -35,11 +35,12 @@ public class HBaseUtils{
 
         HBaseUtils hbu = new HBaseUtils();
 
-        hbu.existTable("User");
         //hbu.getAllTables();
 
         //hbu.descTable("people");
+        //hbu.enableTable("people");
 
+        //hbu.disableTable("people");
         //String[] infos = {"info","family"};
         //hbu.createTable("people", infos);
 
@@ -48,12 +49,15 @@ public class HBaseUtils{
 
         //HColumnDescriptor hc = new HColumnDescriptor("sixsixsix");
 
+        //hbu.modifyTable("people",add , remove);
         //hbu.modifyTable("stu",hc);
         //hbu.getAllTables();
 
 
         //hbu.putData("huoying", "rk001", "cs2", "name", "aobama",new Date().getTime());
         //hbu.getAllTables();
+
+        //hbu.dropTable("people");
 
         conn.close();
     }
@@ -191,6 +195,22 @@ public class HBaseUtils{
                 admin.disableTable(name);
             }else {
                 System.out.println("table不是活动状态");
+            }
+        }else {
+            System.out.println("table不存在");
+        }
+
+    }
+
+    public void enableTable(String tableName) throws Exception {
+
+        TableName name = TableName.valueOf(tableName);
+
+        if(admin.tableExists(name)) {
+            if(admin.isTableDisabled(name)) {
+                admin.enableTable(name);
+            }else {
+                System.out.println("table是活动状态");
             }
         }else {
             System.out.println("table不存在");
