@@ -29,7 +29,7 @@ import java.util.Iterator;
  */
 public class JavaWordCountSparkCore {
     public static void main(String[] args) {
-        String resultHDFSSavePath = "/beifeng/spark/result/wordcount/" + System.currentTimeMillis();
+        String resultHDFSSavePath = "/lankorment/wordcount/" + System.currentTimeMillis();
         // 1. 创建SparkConf配置信息
         SparkConf conf = new SparkConf()
                 .setMaster("local[*]")

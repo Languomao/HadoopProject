@@ -1,13 +1,5 @@
 package kafka;
 
-import java.util.Properties;
-
-import kafka.javaapi.producer.Producer;
-import kafka.producer.KeyedMessage;
-import kafka.producer.ProducerConfig;
-
-
-
 /**
  * 生产者实例
  * @Classname ConsumerTest
@@ -16,7 +8,7 @@ import kafka.producer.ProducerConfig;
  * @Created by LanKorment
  */
 public class ProducerDemo {
-    public static void main(String[] args) throws Exception {
+    /*public static void main(String[] args) throws Exception {
         Properties props = new Properties();
         //zookeeper队列
         props.put("zookeeper.connect", "localhost:2181");
@@ -38,5 +30,5 @@ public class ProducerDemo {
             //System.out.println("成功生产消息····");
         }
 
-    }
+    }*/
 }
