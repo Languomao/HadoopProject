@@ -12,6 +12,7 @@
         <option value="$PROJECT_DIR$/FlinkProject/pom.xml" />
         <option value="$PROJECT_DIR$/HadoopTest/pom.xml" />
         <option value="$PROJECT_DIR$/spark-scala/pom.xml" />
+        <option value="$PROJECT_DIR$/spark-subject/structured-streaming/pom.xml" />
       </set>
     </option>
   </component>

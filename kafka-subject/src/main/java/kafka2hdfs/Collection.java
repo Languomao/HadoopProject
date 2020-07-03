@@ -16,7 +16,6 @@ import org.apache.hadoop.fs.Path;
 
 /**
  * Classname Collection
- * Description TODO
  * Date 2020/6/9 17:13
  * Created by LanKorment
  */
@@ -25,6 +24,7 @@ public class Collection extends TimerTask {   //TimerTask计时器
     public static FileSystem getFileSystem(){
         FileSystem hdfs = null;
         Configuration conf = new Configuration();
+        conf.set("fs.hdfs.impl",org.apache.hadoop.hdfs.DistributedFileSystem.class.getName());
         try {
             URI uri = new URI("hdfs://172.18.101.22:8020");
             hdfs = FileSystem.get(uri , conf);
@@ -40,10 +40,10 @@ public class Collection extends TimerTask {   //TimerTask计时器
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HH");
             String now = sdf.format(new Date());
-            System.out.println("-------Current Time："+now+"--------");
+            System.out.println("-------Current Time : "+now+"--------");
 
             //创建原始数据的对象
-            File srcFile = new File("/dada/telemetry/srcdata");
+            File srcFile = new File("/data/telemetry/srcdata");
             File[] listFiles = srcFile.listFiles(new FilenameFilter() {     //加了一个过滤器
 
                 //过滤器内容
@@ -58,28 +58,27 @@ public class Collection extends TimerTask {   //TimerTask计时器
             });
 
             //创建待上传数据的对象
-            File toUploadDir = new File("/dada/telemetry/toupload");
+            File toUploadDir = new File("/data/telemetry/toupload");
             for (File file : listFiles) {
-                System.out.println("source files : "+file.getAbsolutePath());
+                System.out.println("source files : "+ file.getAbsolutePath());
                 //将过滤好的文件复制到待上传的目录  copyFileToDirectory复制 moveFileToDirectory移动
                 FileUtils.copyFileToDirectory(file, toUploadDir, true);         //true(如果不存在创建)
             }
             System.out.println("data had moved to dir toupload");
 
             //将文件上传到hdfs
-            File backUpDir = new File("/dada/telemetry/backup" + now);   //上传后的文件移动到backUpDir文件夹
+            File backUpDir = new File("/data/telemetry/backup/" + now);   //上传后的文件移动到backUpDir文件夹
             File[] toUploadFiles = toUploadDir.listFiles();
             //FileSystem fs =FileSystem.get(new URI("http://172.18.101.22:9870"),new Configuration(),"root");
             FileSystem fs = getFileSystem();
 
             for (File file : toUploadFiles) {
                 //本地上传到hdfs UUID.randomUUID生成随机数+字母
-                fs.copyFromLocalFile(new Path(file.getAbsolutePath()),new Path("/kafka_logs/" + now + UUID.randomUUID()+".log"));
+                fs.copyFromLocalFile(new Path(file.getAbsolutePath()),new Path("/kafka_logs/" + now + "-" + UUID.randomUUID()+".log"));
                 //移动到待删除目录
                 FileUtils.moveFileToDirectory(file, backUpDir,true);
             }
         }catch (IOException e) {
-            // TODO 自动生成的 catch 块
             e.printStackTrace();
         }
     }

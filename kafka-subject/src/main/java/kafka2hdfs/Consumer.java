@@ -13,7 +13,6 @@ import org.apache.kafka.clients.consumer.KafkaConsumer;
 
 /**
  * Classname Consumer
- * Description TODO
  * Date 2020/6/9 17:16
  * Created by LanKorment
  * @Message hadoop-hdfs&hadoop-common&hadoop-mapreduce-client-core:3.0.0 , kafka_2_12&kafka-clients:2.2.1
@@ -55,7 +54,7 @@ public class Consumer {
         //使用轮询拉取数据--消费完成之后会根据设置时长来清除消息，被消费过的消息，如果想再次被消费，可以根据偏移量(offset)来获取
         try {
             //保存数据的文件夹，如果没有创建
-            String path = "/dada/telemetry/srcdata";
+            String path = "/data/telemetry/srcdata";
             File file = new File(path);
             //file.mkdir();
 
@@ -67,9 +66,8 @@ public class Consumer {
                 //获取到封装在ConsumerRecords消息以后，处理获取到ConsumerRecord对象。
                 for (ConsumerRecord<String, String> r : records) {
                     //打印输出
-                    System.out.printf("topic = %s, offset = %s, key = %s, value = %s", r.topic(), r.offset(),
-                            r.key(), r.value());
-//                    hdfsWriter.writer(r.toString());
+                    //System.out.printf("topic = %s, offset = %s, key = %s, value = %s", r.topic(), r.offset(),r.key(), r.value());
+//                  hdfsWriter.writer(r.toString());
                     //将消费消息写入新的文件中
                     fw.write(r.value() + "\n");
                     fw.flush();

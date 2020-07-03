@@ -12,10 +12,10 @@ import org.apache.kafka.clients.consumer.KafkaConsumer;
 
 /**
  * Classname KafkaCunsumer
- * Description TODO
  * Date 2020/6/9 16:45
  * Created by LanKorment
  * path:https://www.cnblogs.com/zqzdong/p/6438962.html
+ * hadoop-hdfs&hadoop-common&hadoop-mapreduce-client-core:3.0.0 , kafka&kafka-clients:2.2.1
  */
 
 public class KafkaConsumerTest {

@@ -11,7 +11,6 @@ import org.apache.commons.io.FileUtils;
 
 /**
  * Classname ClearTask
- * Description TODO
  * Date 2020/6/9 17:15
  * Created by LanKorment
  */
@@ -24,7 +23,7 @@ public class ClearTask extends TimerTask{
         //时间戳
         long time = new Date().getTime();
 
-        File backup=new File("/dada/telemetry/backup");
+        File backup=new File("/data/telemetry/backup");
         File[] listFiles = backup.listFiles();
         for (File file : listFiles) {
             System.out.println(file.getAbsolutePath());
@@ -33,10 +32,10 @@ public class ClearTask extends TimerTask{
                 //解析字符串的文本，生成 Date
                 long pass = sdf.parse(file.getName()).getTime();
                 if((time - pass) / (60*60*1000)>1){   //大于1小时删除
-                    System.out.println(file.getName()+"已删除");
+                    System.out.println(file.getName()+" had deleted");
                     FileUtils.deleteDirectory(file);
                 }else {
-                    System.out.println(file.getName()+"未达到删除时间！");
+                    System.out.println(file.getName()+"  deletion time not reached!");
                 }
 
             } catch (ParseException | IOException e) {

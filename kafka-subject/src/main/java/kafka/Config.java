@@ -10,7 +10,7 @@ package kafka;
 public class Config {
 
     //话题
-    public static final String TOPIC = "test1";
+    public static final String TOPIC = "test";
 
     //线程数
     public static final Integer THREADS = 1;

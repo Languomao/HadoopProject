@@ -4,18 +4,16 @@ import java.util.List;
 import java.util.Properties;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
-import org.apache.kafka.clients.producer.Producer;
-//import org.apache.kafka.clients.producer.ProducerConfig;
+import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import utils.FileUtil;
 
 /**
  * Classname KafkaProducerTest
- * Description TODO
  * Date 2020/6/12 15:17
  * Created by LanKorment
+ * hadoop-hdfs&hadoop-common&hadoop-mapreduce-client-core:3.0.0 , kafka&kafka-clients:2.6.5
  */
-
 
 public class KafkaProducerTest {
 
@@ -48,34 +46,18 @@ public class KafkaProducerTest {
         props.put("max.block.ms", 3000);
         //props.put(ProducerConfig.MAX_BLOCK_MS_CONFIG, 3000);
         //设置producer段是否压缩消息，默认值是none。即不压缩消息。GZIP、Snappy、LZ4
-        //props.put("compression.type", "none");
-        //props.put(ProducerConfig.COMPRESSION_TYPE_CONFIG, "none");
+        props.put("compression.type", "none");
+        props.put(ProducerConfig.COMPRESSION_TYPE_CONFIG, "none");
         //该参数用于控制producer发送请求的大小。producer端能够发送的最大消息大小。
-        //props.put("max.request.size", 10485760);
-        //props.put(ProducerConfig.MAX_REQUEST_SIZE_CONFIG, 10485760);
+        props.put("max.request.size", 10485760);
+        props.put(ProducerConfig.MAX_REQUEST_SIZE_CONFIG, 10485760);
         //producer发送请求给broker后，broker需要在规定时间范围内将处理结果返还给producer。默认30s
-        //props.put("request.timeout.ms", 60000);
-        //props.put(ProducerConfig.REQUEST_TIMEOUT_MS_CONFIG, 60000);
+        props.put("request.timeout.ms", 60000);
+        props.put(ProducerConfig.REQUEST_TIMEOUT_MS_CONFIG, 60000);
 
+        KafkaProducer<String, String> producer = new KafkaProducer<>(props);
 
-        // 使用上面创建的Properties对象构造KafkaProducer对象
-        //如果采用这种方式创建producer，那么就不需要显示的在Properties中指定key和value序列化类了呢。
-        // Serializer<String> keySerializer = new StringSerializer();
-        // Serializer<String> valueSerializer = new StringSerializer();
-        // Producer<String, String> producer = new KafkaProducer<String, String>(props,
-        // keySerializer, valueSerializer);
-        Producer<String, String> producer = new KafkaProducer<>(props);
-        /*for (int i = 0; i < 100; i++) {
-            //构造好kafkaProducer实例以后，下一步就是构造消息实例。
-            producer.send(new ProducerRecord<>("test", Integer.toString(i), Integer.toString(i)));
-            // 构造待发送的消息对象ProduceRecord的对象，指定消息要发送到的topic主题，分区以及对应的key和value键值对。
-            // 注意，分区和key信息可以不用指定，由kafka自行确定目标分区。
-            //ProducerRecord<String, String> producerRecord = new ProducerRecord<String, String>("my-topic",
-            //        Integer.toString(i), Integer.toString(i));
-            // 调用kafkaProduce的send方法发送消息
-            //producer.send(producerRecord);
-        }*/
-        String filePath = "D:\\WorkSpace\\Telemetry\\";
+        String filePath = "/data/telemetry/";
         List<String> messages = FileUtil.readFileToLine(filePath);
         if(messages!=null && messages.size()>0){
             System.out.println("total records："+messages);
@@ -84,7 +66,7 @@ public class KafkaProducerTest {
                 producer.send(new ProducerRecord<>("test",messages.get(i)));
                 //System.out.println(messages.get(i));
             }
-            long endTime=System.currentTimeMillis();
+            long endTime = System.currentTimeMillis();
             System.out.println("calculated using time："+(endTime-beginTime)+"ms");
             producer.close();
         }else{
@@ -96,5 +78,4 @@ public class KafkaProducerTest {
         producer.close();
         System.out.println("关闭生产者......");
     }
-
 }

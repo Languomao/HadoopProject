@@ -13,7 +13,7 @@
         <module name="hive-subject" />
         <module name="kafka-subject" />
         <module name="spark-scala" />
-        <module name="spark-subject" />
+        <module name="structured_streaming-subject" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
