@@ -32,12 +32,12 @@ object CamerasStructedStreaming {
         .add("collection_id",IntegerType)
         .add("collection_start_time",LongType)
         .add("msg_timestamp",LongType)
-        .add("collection_end_time",LongType))
+        .add("collection_end_time",LongType)
+        )
       .add("Rows",ArrayType(new StructType()
           .add("Timestamp",LongType)
           .add("Key",new StructType()
-            .add("node-name",StringType)
-          )
+            .add("node-name",StringType))
           .add("Content",new StructType()
               .add("process-cpu_PIPELINE_EDIT",ArrayType(new StructType()
                   .add("process-cpu-fifteen-minute",IntegerType)
@@ -45,7 +45,7 @@ object CamerasStructedStreaming {
                   .add("process-cpu-one-minute",IntegerType)
                   .add("process-id",IntegerType)
                   .add("process-name",StringType))
-                )
+                  )
               .add("total-cpu-fifteen-minute",IntegerType)
               .add("total-cpu-five-minute",IntegerType)
               .add("total-cpu-one-minute",IntegerType)
@@ -64,6 +64,22 @@ object CamerasStructedStreaming {
       .load()
       .select(from_json(col("value").cast("string"), schema, jsonOptions).alias("parsed_value"))
 
+    import spark.implicits._
+    val camera = parsed
+      .select(explode($"parsed_value.devices.cameras"))
+      .select("value.*")
+
+    camera.printSchema()
+    val sightings = camera
+      .select("device_id", "last_event.has_person", "last_event.start_time")
+
+    val console = sightings.writeStream
+      .format("console")
+      .outputMode(OutputMode.Append())
+
+    val query = console.start()
+
+    query.awaitTermination()
 
   }
 }
