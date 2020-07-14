@@ -76,7 +76,7 @@ object JSONDataHandler extends Serializable{
       df.show()
     })*/
 
-/*    //方法四：直接将 RDD[String] 转成DataSet 然后通过schema转换
+    //方法四：直接将 RDD[String] 转成DataSet 然后通过schema转换
     val schema = StructType(List(
       StructField("namespace", StringType),
       StructField("id", StringType),
@@ -85,22 +85,53 @@ object JSONDataHandler extends Serializable{
       StructField("value", StringType),
       StructField("valueType", StringType))
     )
+/*      val schema = new StructType()
+        .add("Source",StringType)
+        .add("Telemetry",new StructType()
+          .add("node_id_str",StringType)
+          .add("subscription_id_str",StringType)
+          .add("encoding_path",StringType)
+          .add("collection_id",IntegerType)
+          .add("collection_start_time",LongType)
+          .add("msg_timestamp",LongType)
+          .add("collection_end_time",LongType)
+        )
+        .add("Rows",ArrayType(new StructType()
+          .add("Timestamp",LongType)
+          .add("Key",new StructType()
+            .add("node-name",StringType))
+          .add("Content",new StructType()
+            .add("process-cpu_PIPELINE_EDIT",ArrayType(new StructType()
+              .add("process-cpu-fifteen-minute",IntegerType)
+              .add("process-cpu-five-minute",IntegerType)
+              .add("process-cpu-one-minute",IntegerType)
+              .add("process-id",IntegerType)
+              .add("process-name",StringType))
+            )
+            .add("total-cpu-fifteen-minute",IntegerType)
+            .add("total-cpu-five-minute",IntegerType)
+            .add("total-cpu-one-minute",IntegerType)
+          )
+        )
+        )*/
+
     stream.map(record => record.value()).foreachRDD(rdd => {
       val spark = SparkSession.builder().config(rdd.sparkContext.getConf).getOrCreate()
       import spark.implicits._
       import org.apache.spark.sql.functions._
       val ds = spark.createDataset(rdd)
       ds.select(from_json('value.cast("string"), schema) as "value").select($"value.*").show()
-      //ds.show()
-    })*/
 
-    //方法五：直接将 RDD[String] 转成DataSet 然后通过read.json转成DataFrame
+      //ds.show()
+    })
+
+/*    //方法五：直接将 RDD[String] 转成DataSet 然后通过read.json转成DataFrame
     stream.map(record => record.value()).foreachRDD(rdd => {
       val spark = SparkSession.builder().config(rdd.sparkContext.getConf).getOrCreate()
       import spark.implicits._
       val df = spark.read.json(spark.createDataset(rdd))
       df.show()
-    })
+    })*/
 
     ssc.start()
     ssc.awaitTermination()

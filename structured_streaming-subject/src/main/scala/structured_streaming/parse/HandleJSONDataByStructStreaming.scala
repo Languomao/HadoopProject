@@ -17,34 +17,48 @@ object HandleJSONDataByStructStreaming {
     val spark = SparkSession
       .builder()
       .appName(this.getClass.getSimpleName)
-      .master("local[2]")
+      .master("local[*]")
       .getOrCreate()
     val source = spark
       .readStream
       .format("kafka")
       .option("kafka.bootstrap.servers", "localhost:9092")
-      .option("subscribe", "test")
+      .option("subscribe", "test5")
       .option("startingOffsets", "earliest")
       .option("failOnDataLoss", "false")
       .load()
-    import spark.implicits._
+
     val schema = StructType(List(
       StructField("id", StringType),
-      StructField("value", StringType),
+      StructField("value", FloatType),
       StructField("time", StringType),
       StructField("valueType", StringType),
       StructField("region", StringType),
       StructField("namespace", StringType))
     )
+
+/*    val schema = new StructType()
+      .add("id",StringType)
+      .add("value",StringType)
+      .add("time",FloatType)
+      .add("valueType",StringType)
+      .add("region",StringType)
+      .add("namespace",StringType)*/
+
+    import spark.implicits._
+
+    //data就是将kafka中的json数据转换后的数据，然后在转换的基础上再做SQL查询
     val data = source.select(from_json('value.cast("string"), schema) as "value").select($"value.*")
-      .select(date_format($"time".cast(DateType), "yyyyMMdd").as("day"), $"*")
+        .select("*")
+      //.select(date_format($"time".cast(DateType), "yyyyMMdd").as("day"), $"*")
+
     val query = data
       .writeStream
-      .format("parquet")
+      .format("console")
       .outputMode("Append")
-      .option("checkpointLocation", "D:\\WorkSpace\\SparkTestData\\DataCheckPoint")
-      .option("path", "D:\\WorkSpace\\SparktestData")
-      .trigger(Trigger.ProcessingTime(3000)).partitionBy("namespace", "day")
+      //.option("checkpointLocation", "D:\\WorkSpace\\SparkTestData\\DataCheckPoint")
+      //.option("path", "D:\\WorkSpace\\SparktestData")
+      //.trigger(Trigger.ProcessingTime(3000)).partitionBy("namespace", "day")
       .start()
 
     query.awaitTermination()
