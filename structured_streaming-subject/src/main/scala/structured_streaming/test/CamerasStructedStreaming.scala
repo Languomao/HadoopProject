@@ -1,4 +1,4 @@
-package structured_streaming.parse
+package structured_streaming.test
 
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.functions._

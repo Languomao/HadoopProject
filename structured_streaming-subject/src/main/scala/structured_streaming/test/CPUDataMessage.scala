@@ -1,4 +1,4 @@
-package structured_streaming.parse
+package structured_streaming.test
 
 /**
   * Classname CPUDataMessage

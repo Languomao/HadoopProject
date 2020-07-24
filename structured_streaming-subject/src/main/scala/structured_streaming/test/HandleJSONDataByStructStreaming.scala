@@ -1,8 +1,7 @@
-package structured_streaming.parse
+package structured_streaming.test
 
 import org.apache.spark.sql.SparkSession
-import org.apache.spark.sql.functions.{date_format, from_json, struct}
-import org.apache.spark.sql.streaming.Trigger
+import org.apache.spark.sql.functions.from_json
 import org.apache.spark.sql.types._
 
 /**

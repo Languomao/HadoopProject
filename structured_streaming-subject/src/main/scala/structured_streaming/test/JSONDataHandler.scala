@@ -1,16 +1,17 @@
-package structured_streaming.parse
+package structured_streaming.test
+
+import java.util.{LinkedHashMap => JLinkedHashMap}
 
 import com.alibaba.fastjson.JSON
 import com.google.gson.Gson
 import org.apache.kafka.common.serialization.StringDeserializer
 import org.apache.spark.SparkConf
-import org.apache.spark.sql.{Row, SaveMode, SparkSession}
 import org.apache.spark.sql.types._
+import org.apache.spark.sql.{Row, SparkSession}
 import org.apache.spark.streaming.kafka010.ConsumerStrategies.Subscribe
 import org.apache.spark.streaming.kafka010.KafkaUtils
 import org.apache.spark.streaming.kafka010.LocationStrategies.PreferConsistent
 import org.apache.spark.streaming.{Seconds, StreamingContext}
-import java.util.{LinkedHashMap => JLinkedHashMap}
 
 /**
   * Classname JSONDataHandler
@@ -21,19 +22,19 @@ import java.util.{LinkedHashMap => JLinkedHashMap}
 
 object JSONDataHandler extends Serializable{
   def main(args: Array[String]): Unit = {
-    val conf = new SparkConf().setMaster("local[2]").setAppName("JSONDataHandler")
+    val conf = new SparkConf().setMaster("local[*]").setAppName("JSONDataHandler")
     val ssc = new StreamingContext(conf, Seconds(2))
 
     val kafkaParams = Map[String, Object](
       "bootstrap.servers" -> "localhost:9092",
       "key.deserializer" -> classOf[StringDeserializer],
       "value.deserializer" -> classOf[StringDeserializer],
-      "group.id" -> "spark_streaming",
+      "group.id" -> "test",
       "auto.offset.reset" -> "earliest",
       "enable.auto.commit" -> (false: java.lang.Boolean)
     )
 
-    val topics = Array("test")
+    val topics = Array("test1")
     val stream = KafkaUtils.createDirectStream[String, String](
       ssc,
       PreferConsistent,
@@ -117,8 +118,8 @@ object JSONDataHandler extends Serializable{
 
     stream.map(record => record.value()).foreachRDD(rdd => {
       val spark = SparkSession.builder().config(rdd.sparkContext.getConf).getOrCreate()
-      import spark.implicits._
       import org.apache.spark.sql.functions._
+      import spark.implicits._
       val ds = spark.createDataset(rdd)
       ds.select(from_json('value.cast("string"), schema) as "value").select($"value.*").show()
 

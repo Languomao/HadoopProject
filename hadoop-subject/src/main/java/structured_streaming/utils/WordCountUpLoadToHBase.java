@@ -1,4 +1,4 @@
-package utils;
+package structured_streaming.utils;
 
 import java.io.IOException;
 import java.util.StringTokenizer;

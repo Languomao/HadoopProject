@@ -1,4 +1,4 @@
-package utils;
+package structured_streaming.utils;
 
 
 import org.apache.hadoop.hive.ql.exec.Description;

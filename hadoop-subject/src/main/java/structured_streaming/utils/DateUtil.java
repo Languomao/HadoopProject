@@ -1,4 +1,4 @@
-package utils;
+package structured_streaming.utils;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

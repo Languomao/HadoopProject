@@ -6,7 +6,7 @@ import java.util.Properties;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
-import utils.FileUtil;
+import structured_streaming.utils.FileUtil;
 
 /**
  * Classname KafkaProducerTest
@@ -17,7 +17,7 @@ import utils.FileUtil;
 
 public class KafkaProducerTest {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         // 构造一个java.util.Properties对象
         Properties props = new Properties();
         // 指定bootstrap.servers属性。必填，无默认值。用于创建向kafka broker服务器的连接。
@@ -57,13 +57,13 @@ public class KafkaProducerTest {
 
         KafkaProducer<String, String> producer = new KafkaProducer<>(props);
 
-        String filePath = "/data/telemetry/";
+        String filePath = "D:\\WorkSpace\\Telemetry\\test.txt";
         List<String> messages = FileUtil.readFileToLine(filePath);
         if(messages!=null && messages.size()>0){
             System.out.println("total records："+messages);
             long beginTime=System.currentTimeMillis();
             for(int i=0;i<messages.size();i++){
-                producer.send(new ProducerRecord<>("test",messages.get(i)));
+                producer.send(new ProducerRecord<>("test2",messages.get(i)));
                 //System.out.println(messages.get(i));
             }
             long endTime = System.currentTimeMillis();
@@ -73,9 +73,10 @@ public class KafkaProducerTest {
             System.out.println("消息为空");
             System.exit(-2);
         }
-        System.out.println("消息生产结束......");
+        System.out.println("消息等待生产消息......");
         // 关闭kafkaProduce对象
         producer.close();
-        System.out.println("关闭生产者......");
+        //producer.wait();
+        //System.out.println("关闭生产者......");
     }
 }

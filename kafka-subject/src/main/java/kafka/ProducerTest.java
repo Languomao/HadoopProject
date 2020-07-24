@@ -2,7 +2,7 @@ package kafka;
 
 
 import org.apache.kafka.clients.producer.KafkaProducer;
-import utils.FileUtil;
+import structured_streaming.utils.FileUtil;
 
 import java.util.List;
 import java.util.Properties;
