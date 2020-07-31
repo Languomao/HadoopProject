@@ -63,7 +63,7 @@ public class KafkaProducerTest {
             System.out.println("total records："+messages);
             long beginTime=System.currentTimeMillis();
             for(int i=0;i<messages.size();i++){
-                producer.send(new ProducerRecord<>("test2",messages.get(i)));
+                producer.send(new ProducerRecord<>("test",messages.get(i)));
                 //System.out.println(messages.get(i));
             }
             long endTime = System.currentTimeMillis();

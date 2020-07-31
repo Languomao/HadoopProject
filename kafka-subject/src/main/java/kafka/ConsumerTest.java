@@ -33,7 +33,7 @@ public class ConsumerTest {
 
         //ConsumerConfig config = new ConsumerConfig(props);
         KafkaConsumer consumer =new KafkaConsumer<String , String>(props);
-        consumer.subscribe(Arrays.asList("test"));
+        consumer.subscribe(Arrays.asList("testout"));
 
         /*Map<String, Integer> topicCountMap = new HashMap<String, Integer>();
         topicCountMap.put(Config.TOPIC, new Integer(1));

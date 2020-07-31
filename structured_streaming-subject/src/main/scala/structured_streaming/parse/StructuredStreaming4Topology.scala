@@ -2,7 +2,6 @@ package structured_streaming.parse
 
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.functions.from_json
-import org.apache.spark.sql.streaming.OutputMode
 import org.apache.spark.sql.types._
 import structured_streaming.parse.KafkaProducer.messageproducer
 import structured_streaming.parse.Pretreatment.preprocessingData
@@ -62,51 +61,37 @@ object StructuredStreaming4Topology {
       .option("startingOffsets", "earliest")
       .load()
       //from_json从一个json 字符串中按照指定的schema格式抽取出来作为DataFrame的列
-      .select(from_json('value.cast("string"), schema) as "value").select($"value.Source",
-      $"value.Telemetry.node_id_str",$"value.Telemetry.subscription_id_str",$"value.Telemetry.encoding_path",$"value.Telemetry.collection_id",$"value.Telemetry.collection_start_time",$"value.Telemetry.msg_timestamp",$"value.Telemetry.collection_end_time",
-      $"value.Rows.adjacency-sids",$"value.Rows.links",$"value.Rows.nodes",$"value.Rows.prefix-sids",$"value.Rows.prefixes")
+      /*.select(from_json('value.cast("string"), schema) as "value")
+      .select($"value.Source", $"value.Telemetry.node_id_str",$"value.Telemetry.subscription_id_str",$"value.Telemetry.encoding_path",$"value.Telemetry.collection_id",$"value.Telemetry.collection_start_time",$"value.Telemetry.msg_timestamp",$"value.Telemetry.collection_end_time",
+        $"value.Rows.adjacency-sids",$"value.Rows.links",$"value.Rows.nodes",$"value.Rows.prefix-sids",$"value.Rows.prefixes")*/
 
-    /*val df = spark.readStream
-      .format("kafka")  //数据来源
-      //kafka参数设置
-      .option("kafka.bootstrap.servers", "localhost:9092")
-      .option("subscribe", "test5")
-      .option("startingOffsets", "earliest")
-      .load()*/
 
-/*    val ds = parsed
-      .selectExpr("CAST(key AS STRING)", "CAST(value AS STRING)")
+    //将结果回传kafka
+    val ds = parsed
       .select(from_json('value.cast("string"), schema) as "value")
-      .select($"value.Source",
-      $"value.Telemetry.node_id_str",$"value.Telemetry.subscription_id_str",$"value.Telemetry.encoding_path",$"value.Telemetry.collection_id",$"value.Telemetry.collection_start_time",$"value.Telemetry.msg_timestamp",$"value.Telemetry.collection_end_time",
-      $"value.Rows.adjacency-sids",$"value.Rows.links",$"value.Rows.nodes",$"value.Rows.prefix-sids",$"value.Rows.prefixes")
+      /*.select($"value.Source", $"value.Telemetry.node_id_str",$"value.Telemetry.subscription_id_str",$"value.Telemetry.encoding_path",$"value.Telemetry.collection_id",$"value.Telemetry.collection_start_time",$"value.Telemetry.msg_timestamp",$"value.Telemetry.collection_end_time",
+        $"value.Rows.adjacency-sids",$"value.Rows.links",$"value.Rows.nodes",$"value.Rows.prefix-sids",$"value.Rows.prefixes")*/
+
+      .selectExpr( "CAST(value AS STRING)")
       .writeStream
-      .format("kafka")
-      .option("kafka.bootstrap.servers", "localhost:9092")
-      .option("topic", "testout")
-      .option("checkpointLocation", "E:\\Kafka\\checkpoint")
-      .start()*/
-
-
-    //通过Append的模式将结果输出到console
-    val console = parsed.writeStream
-      .format("console")
-      .outputMode(OutputMode.Append())
-
-    //通过Append的模式将结果输出到kafka
-/*
-    val console = parsed.writeStream
       .format("kafka")
       .option("kafka.bootstrap.servers", "localhost:9092")
       .option("topic", "testout")
       .option("checkpointLocation", "E:\\Kafka\\checkpoint")
       .outputMode("append")
       .start()
-*/
 
-    //val query = console.start()
+      //阻塞spark等待任务结束,防止进程关闭SparkContent
+      ds.awaitTermination()
 
-    //query.awaitTermination()
+    //通过Append的模式将结果输出到console
+/*    val console = parsed.writeStream
+      .format("console")
+      .outputMode(OutputMode.Append())
+
+    val query = console.start()
+
+    query.awaitTermination()*/
 
   }
 }

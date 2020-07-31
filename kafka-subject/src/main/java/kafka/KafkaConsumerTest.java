@@ -20,7 +20,7 @@ import org.apache.kafka.clients.consumer.KafkaConsumer;
 
 public class KafkaConsumerTest {
     public static void main(String[] args) {
-        String topicName = "test";
+        String topicName = "testout";
         String groupId = "group1";
         //构造java.util.Properties对象
         Properties props = new Properties();
@@ -53,7 +53,7 @@ public class KafkaConsumerTest {
                 //循环调用kafkaConsumer.poll方法获取封装在ConsumerRecord的topic消息。
                 ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(0));
                 //获取到封装在ConsumerRecords消息以后，处理获取到ConsumerRecord对象。
-                FileWriter fw = new FileWriter(file + "/test", true);
+                FileWriter fw = new FileWriter(file + "/output", true);
                 for (ConsumerRecord<String, String> record : records) {
                     //简单的打印输出,一行数据为一条消息
                     System.out.println(
