@@ -27,6 +27,7 @@ object ManipulationString {
       .load()
 
     val query = df
+      .selectExpr("CAST(offset AS INT)", "CAST(value AS STRING)", "CAST(topic AS STRING)", "CAST(timestamp AS timestamp)", "CAST(timestampType AS STRING)", "CAST(partition AS STRING)", "CAST(key AS STRING)")
       .writeStream
       .format("console")
       .outputMode("Append")
