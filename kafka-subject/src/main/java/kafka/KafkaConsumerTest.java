@@ -20,7 +20,7 @@ import org.apache.kafka.clients.consumer.KafkaConsumer;
 
 public class KafkaConsumerTest {
     public static void main(String[] args) {
-        String topicName = "testout";
+        String topicName = "test5";
         String groupId = "group1";
         //构造java.util.Properties对象
         Properties props = new Properties();

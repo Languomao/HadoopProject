@@ -14,7 +14,7 @@ import scala.io.Source
 object KafkaProducer {
   def main(args: Array[String]): Unit = {
     //kafka生产消息
-    messageproducer("D:\\WorkSpace\\Telemetry\\test.txt","test")
+    messageproducer("D:\\WorkSpace\\Telemetry\\test.txt","test2")
   }
 
   //传入的参数path为经过预处理的数据的路径，即kafka会将该路径下的数据生成消息,topic为kafka主题
@@ -42,6 +42,6 @@ object KafkaProducer {
         }
       })
     }
-    producer.close()
+    producer.flush()
   }
 }

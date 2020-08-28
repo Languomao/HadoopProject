@@ -32,4 +32,5 @@ class  JDBCSink(url:String, user:String, pwd:String) extends ForeachWriter[Row] 
   def close(errorOrNull: Throwable): Unit = {
     connection.close
   }
+
 }

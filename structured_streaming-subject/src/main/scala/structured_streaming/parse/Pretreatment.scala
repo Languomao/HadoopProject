@@ -53,8 +53,8 @@ object Pretreatment {
       val body = StringUtils.substringAfter(str, header)
 
       //将Header加入到Json中
-      /*val data = replaceBlank(body);
-      val json = new StringBuffer(data).insert(1,"\"Header\":" + "\"" + header + "\"" + ",").toString();*/
+      val data = replaceBlank(body);
+      //val json = new StringBuffer(data).insert(1,"\"Header\":" + "\"" + header + "\"" + ",").toString();
 
       //未将Header加入到body中
       val json = replaceBlank(body)

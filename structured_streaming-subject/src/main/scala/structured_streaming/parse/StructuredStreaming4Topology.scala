@@ -6,6 +6,8 @@ import org.apache.spark.sql.types._
 import structured_streaming.parse.KafkaProducer.messageproducer
 import structured_streaming.parse.Pretreatment.preprocessingData
 
+import org.apache.spark.sql.types.StructType;
+
 /**
   * Classname StructuredStreaming4Topology
   * Description TODO
@@ -71,27 +73,18 @@ object StructuredStreaming4Topology {
       .select(from_json('value.cast("string"), schema) as "value")
       /*.select($"value.Source", $"value.Telemetry.node_id_str",$"value.Telemetry.subscription_id_str",$"value.Telemetry.encoding_path",$"value.Telemetry.collection_id",$"value.Telemetry.collection_start_time",$"value.Telemetry.msg_timestamp",$"value.Telemetry.collection_end_time",
         $"value.Rows.adjacency-sids",$"value.Rows.links",$"value.Rows.nodes",$"value.Rows.prefix-sids",$"value.Rows.prefixes")*/
-
       .selectExpr( "CAST(value AS STRING)")
       .writeStream
-      .format("kafka")
-      .option("kafka.bootstrap.servers", "localhost:9092")
-      .option("topic", "testout")
-      .option("checkpointLocation", "E:\\Kafka\\checkpoint")
+      .format("console")
+      //.option("kafka.bootstrap.servers", "localhost:9092")
+      //.option("topic", "testout")
+      //.option("checkpointLocation", "E:\\Kafka\\checkpoint")
       .outputMode("append")
       .start()
 
       //阻塞spark等待任务结束,防止进程关闭SparkContent
       ds.awaitTermination()
 
-    //通过Append的模式将结果输出到console
-/*    val console = parsed.writeStream
-      .format("console")
-      .outputMode(OutputMode.Append())
-
-    val query = console.start()
-
-    query.awaitTermination()*/
-
   }
+
 }
